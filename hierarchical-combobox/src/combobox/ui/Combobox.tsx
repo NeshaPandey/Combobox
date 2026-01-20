@@ -105,7 +105,8 @@ export function Combobox({ label }: ComboboxProps) {
     if (nextIndex >= 0 && nextIndex < focusableIds.length) {
       setFocusedId(focusableIds[nextIndex])
     }
-}
+  }
+
 
 
   if (Object.keys(tree).length === 0) {

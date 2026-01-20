@@ -16,7 +16,11 @@ export function TreeRow({
   node,
   level,
   isExpanded,
-  onToggle
+  isFocused,
+  isSelected,
+  isIndeterminate,
+  onToggle,
+  onSelect
 }: TreeRowProps) {
   return (
     <div
