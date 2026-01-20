@@ -87,22 +87,24 @@ export function Combobox({ label }: ComboboxProps) {
 )
 
 
-  const visibleIds = visibleNodes.map(n => n.id)
+  const focusableIds = visibleNodes.map(n => n.id)
+
 
   function moveFocus(delta: number) {
     if (!focusedId) {
-      setFocusedId(visibleIds[0] ?? null)
+      setFocusedId(focusableIds[0] ?? null)
       return
     }
 
-    const index = visibleIds.indexOf(focusedId)
+    const index = focusableIds.indexOf(focusedId)
     if (index === -1) return
 
     const nextIndex = index + delta
-    if (nextIndex >= 0 && nextIndex < visibleIds.length) {
-      setFocusedId(visibleIds[nextIndex])
+    if (nextIndex >= 0 && nextIndex < focusableIds.length) {
+      setFocusedId(focusableIds[nextIndex])
     }
   }
+
 
 
   return (
