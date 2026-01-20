@@ -1,4 +1,4 @@
-import { TreeNode, TreeNodeId } from "./treeTypes"
+import type { TreeNode, TreeNodeId } from "./treeTypes"
 
 export async function loadChildren(
   parentId: TreeNodeId | null

@@ -2,7 +2,7 @@ import { computeSelectionState } from "../core/useSelection"
 import { searchTree } from "../core/useSearch"
 
 import { useEffect, useId, useState } from "react"
-import { TreeNode } from "../core/treeTypes"
+import type { TreeNode } from "../core/treeTypes"
 import { loadChildren } from "../core/treeLoader"
 import { TreeRow } from "./TreeRow"
 
@@ -91,6 +91,8 @@ export function Combobox({ label }: ComboboxProps) {
 
 
   function moveFocus(delta: number) {
+    if (focusableIds.length === 0) return
+
     if (!focusedId) {
       setFocusedId(focusableIds[0] ?? null)
       return
@@ -103,8 +105,21 @@ export function Combobox({ label }: ComboboxProps) {
     if (nextIndex >= 0 && nextIndex < focusableIds.length) {
       setFocusedId(focusableIds[nextIndex])
     }
-  }
+}
 
+
+  if (Object.keys(tree).length === 0) {
+    return (
+      <div className="relative w-80">
+        <label className="block text-sm font-medium">{label}</label>
+        <input
+          className="mt-1 w-full rounded border px-2 py-1"
+          placeholder="Loading…"
+          disabled
+        />
+      </div>
+    )
+  }
 
 
   return (
@@ -129,37 +144,45 @@ export function Combobox({ label }: ComboboxProps) {
           role="tree"
           tabIndex={0}
           className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded border bg-white"
-          onKeyDown={e => {
-            switch (e.key) {
-              case "ArrowDown":
-                e.preventDefault()
-                moveFocus(1)
-                break
-              case "ArrowUp":
-                e.preventDefault()
-                moveFocus(-1)
-                break
-              case "ArrowRight":
-                if (focusedId) toggleNode(focusedId)
-                break
-              case "ArrowLeft":
-                if (focusedId) {
-                  setExpandedIds(prev => {
-                    const next = new Set(prev)
-                    next.delete(focusedId)
-                    return next
-                  })
-                }
-                break
-              case "Enter":
-              case " ":
-                if (focusedId) toggleNode(focusedId)
-                break
-              case "Escape":
-                setIsOpen(false)
-                break
+     onKeyDown={e => {
+        if (focusableIds.length === 0) return
+
+        switch (e.key) {
+          case "ArrowDown":
+            e.preventDefault()
+            moveFocus(1)
+            break
+
+          case "ArrowUp":
+            e.preventDefault()
+            moveFocus(-1)
+            break
+
+          case "ArrowRight":
+            if (focusedId) toggleNode(focusedId)
+            break
+
+          case "ArrowLeft":
+            if (focusedId) {
+              setExpandedIds(prev => {
+                const next = new Set(prev)
+                next.delete(focusedId)
+                return next
+              })
             }
-          }}
+            break
+
+          case "Enter":
+          case " ":
+            if (focusedId) toggleNode(focusedId)
+            break
+
+          case "Escape":
+            setIsOpen(false)
+            break
+        }
+      }}
+
         >
 
           <div className="p-1 border-b">

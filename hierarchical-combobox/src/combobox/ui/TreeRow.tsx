@@ -1,4 +1,4 @@
-import { TreeNode } from "../core/treeTypes"
+import type { TreeNode } from "../core/treeTypes"
 
 interface TreeRowProps {
   node: TreeNode

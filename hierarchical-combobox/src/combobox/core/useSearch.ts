@@ -1,4 +1,4 @@
-import { TreeMap, TreeNodeId } from "./treeTypes"
+import type { TreeMap, TreeNodeId } from "./treeTypes"
 
 export interface SearchResult {
   visibleIds: Set<TreeNodeId>

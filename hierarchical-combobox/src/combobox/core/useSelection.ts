@@ -1,4 +1,5 @@
-import { TreeMap, TreeNodeId } from "./treeTypes"
+import type { TreeMap, TreeNodeId } from "./treeTypes"
+
 
 export interface SelectionState {
   selectedIds: Set<TreeNodeId>
